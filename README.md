@@ -6,7 +6,7 @@ Bem vindo or Welcome!
 
 ## Se você é do Brasil:
 
-Bem vindo ao repositório do webBudgetJS! Uma versão Javascript (React + Express) do [https://github.com/arthurgregorio/web-budget](WebBudget).
+Bem vindo ao repositório do webBudgetJS! Uma versão Javascript (React + Express) do [WebBudget](https://github.com/arthurgregorio/web-budget).
 
 Para saber mais, acesse a página oficial do projeto em [http://webbudget.com.br](http://webbudget.com.br).
 
@@ -16,7 +16,7 @@ Utilize a imagem docker! Mais informações sobre como realizar o deploy podem s
 
 ## If you are not from Brazil:
 
-Welcome to the webBudgetJS repository! A Javascript version (React + Express) of [https://github.com/arthurgregorio/web-budget](WebBudget).
+Welcome to the webBudgetJS repository! A Javascript version (React + Express) of [WebBudget](https://github.com/arthurgregorio/web-budget).
 
 If you want to know more about, please, access the oficial project page in [http://webbudget.com.br](http://webbudget.com.br).
 
