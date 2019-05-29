@@ -12,7 +12,7 @@ Para saber mais, acesse a página oficial do projeto em [http://webbudget.com.br
 
 ### Se você quer apenas testar o sistema:
 
-Utilize a imagem docker! Mais informações sobre como realizar o deploy podem ser [encontradas aqui](https://github.com/arthurgregorio/web-budget-docker).
+Utilize a imagem docker (Da versão Java)! Mais informações sobre como realizar o deploy podem ser [encontradas aqui](https://github.com/arthurgregorio/web-budget-docker).
 
 ## If you are not from Brazil:
 
@@ -22,4 +22,4 @@ If you want to know more about, please, access the oficial project page in [http
 
 ### If you want to try the project:
 
-Under construction...
+Use our docker image (Java version)! More information and how-to to deploy it can be [found here](https://github.com/arthurgregorio/web-budget-docker).
