@@ -1,0 +1,50 @@
+[
+    {
+        "name": "development",
+        "type": "postgres",
+        "host": "localhost",
+        "port": 5432,
+        "username": "*****",
+        "password": "*****",
+        "database": "webbudgetjs",
+        "entities": ["src/entity/*.ts"],
+        "logging": true,
+        "migrationsTableName": "migrations",
+        "migrations": ["migrations/*.ts"],
+        "cli": {
+            "migrationsDir": "migrations"
+        }
+    },
+    {
+        "name": "test",
+        "type": "postgres",
+        "host": "-----",
+        "port": 5432,
+        "username": "*****",
+        "password": "*****",
+        "database": "webbudgetjs",
+        "entities": ["src/entity/*.ts"],
+        "logging": true,
+        "migrationsTableName": "migrations",
+        "migrations": ["migrations/*.ts"],
+        "cli": {
+            "migrationsDir": "migrations"
+        }
+    },
+    {
+        "name": "production",
+        "type": "postgres",
+        "host": "-----",
+        "port": 5432,
+        "username": "*****",
+        "password": "*****",
+        "database": "webbudgetjs",
+        "entities": ["src/entity/*.ts"],
+        "logging": true,
+        "migrationsTableName": "migrations",
+        "migrations": ["migrations/*.ts"],
+        "cli": {
+            "migrationsDir": "migrations"
+        }
+    }
+]
