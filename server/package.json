@@ -9,7 +9,7 @@
         "build": "tsc",
         "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate process.env.name"
     },
-    "nodemonConfig":{
+    "nodemonConfig": {
         "ignore": [
             "**/*.test.ts",
             "**/*.spec.ts",

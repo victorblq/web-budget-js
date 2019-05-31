@@ -1,9 +1,10 @@
 import { PersistentEntity } from "../PersistentEntity";
-import {Column, Entity, JoinColumn, OneToOne, ManyToOne} from "typeorm";
+import {Column, Entity, JoinColumn, OneToOne, ManyToOne, BeforeInsert} from "typeorm";
 import {Profile} from "./Profile";
 import { Group } from "./Group";
 import { StoreType } from "./StoreType";
 import { DefaultSchemas } from "../../infrastructure/DefaultSchemas";
+import * as bcrypt from 'bcrypt';
 
 /**
  * User representation
@@ -37,4 +38,14 @@ export class User extends PersistentEntity {
     storeType: StoreType;
 
     passwordConfirmation:string
+
+    @BeforeInsert()
+    async beforeInsert(){
+        this.created = new Date();
+        this.password = await this.encryptPassword();
+    }
+
+    private encryptPassword(){
+        return bcrypt.hash(this.password, 10).then((hashedPassword: string) => hashedPassword);
+    }
 }

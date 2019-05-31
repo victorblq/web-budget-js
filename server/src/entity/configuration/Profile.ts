@@ -21,4 +21,10 @@ export class Profile extends PersistentEntity {
     @Column({name: "show_wallet_balances", nullable: false})
     showWalletBalances: boolean;
 
+    constructor(){
+        super();
+        this.activeTheme = ThemeType.BLACK;
+        this.showWalletBalances = true;
+        this.useDarkSidebar= true;
+    }
 }

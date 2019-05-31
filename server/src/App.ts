@@ -3,9 +3,14 @@ import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import 'dotenv/config';
 
-import { createConnection } from 'typeorm';
+import { createConnection, getConnection } from 'typeorm';
 
 import { Controller } from './controllers/Controller';
+import { AuthenticationController } from './controllers/AuthenticationController';
+import { User } from './entity/configuration/User';
+import { StoreType } from './entity/configuration/StoreType';
+import { Profile } from './entity/configuration/Profile';
+import { Group } from './entity/configuration/Group';
 
 export class App {
     public app: express.Application;
@@ -48,11 +53,26 @@ export class App {
         });
     }
 
-    private seedDatabase(){
-        console.log("Seed database here");
+    private async seedDatabase(){
+        const user1 = new User();
+        user1.name = "Victor Carvalho";
+        user1.email = "victor.blq@gmail.com";
+        user1.password = "teste123";
+        user1.username = "victorblq";
+        user1.storeType = StoreType.LOCAL;
+        user1.active = true;
+        user1.profile = await getConnection(process.env.ENVIRONMENT).getRepository(Profile).save(new Profile());
+        const group1 = new Group();
+        group1.name = "Group1";
+        group1.active = true; 
+        user1.group = await getConnection(process.env.ENVIRONMENT).getRepository(Group).save(group1);
+
+        getConnection(process.env.ENVIRONMENT).getRepository(User).save(user1);
     }
 }
 
-const app = new App([], process.env.PORT);
+const app = new App([
+    new AuthenticationController()
+], process.env.PORT);
 
 app.listen();
