@@ -4,7 +4,7 @@ import { ThemeType } from "./ThemeType";
 import { DefaultSchemas } from "../../infrastructure/DefaultSchemas";
 
 /**
- * The {@link User} profile, this class hold the individual {@link User} preferences
+ * The User profile, this class hold the individual User preferences
  *
  * @author Victor Carvalho
  *

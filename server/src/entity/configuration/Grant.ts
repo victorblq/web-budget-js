@@ -5,7 +5,7 @@ import { DefaultSchemas } from "../../infrastructure/DefaultSchemas";
 import { Authorization } from "./Authorization";
 
 /**
- * This is responsible to create the link between a {@link Group} and a {@link Authorization}
+ * This is responsible to create the link between a Group and a Authorization
  *
  * @author Victor Carvalho
  *

@@ -3,8 +3,8 @@ import { Entity, Column } from "typeorm";
 import { DefaultSchemas } from "../../infrastructure/DefaultSchemas";
 
 /**
- * This class represents a authorization for a single functionality, this is also commonly part of a {@link Grant} for
- * a {@link Group} that have {@link User} linked to
+ * This class represents a authorization for a single functionality, this is also commonly part of a Grant for
+ * a Group that have User linked to
  *
  * @author Victor Carvalho
  *

@@ -1,5 +1,5 @@
 /**
- * This enum represents the types of authentication strategies to use with the {@link User}
+ * This enum represents the types of authentication strategies to use with the User
  *
  * @author Victor Carvalho
  *

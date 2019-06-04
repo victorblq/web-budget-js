@@ -4,7 +4,7 @@ import { Grant } from "./Grant";
 import { DefaultSchemas } from "../../infrastructure/DefaultSchemas";
 
 /**
- * This class represents a group of {@link Authorization} for a collection of {@link User}
+ * This class represents a group of Authorization for a collection of User
  *
  * @author Victor Carvalho
  *

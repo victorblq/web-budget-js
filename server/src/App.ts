@@ -11,6 +11,10 @@ import { User } from './entity/configuration/User';
 import { StoreType } from './entity/configuration/StoreType';
 import { Profile } from './entity/configuration/Profile';
 import { Group } from './entity/configuration/Group';
+import { Contact } from './entity/registration/Contact';
+import { ContactType } from './entity/registration/ContactType';
+import { Telephone } from './entity/registration/Telephone';
+import { NumberType } from './entity/registration/NumberType';
 
 export class App {
     public app: express.Application;
@@ -68,6 +72,23 @@ export class App {
         user1.group = await getConnection(process.env.ENVIRONMENT).getRepository(Group).save(group1);
 
         getConnection(process.env.ENVIRONMENT).getRepository(User).save(user1);
+
+        // let contact1 = new Contact();
+        // contact1.code = "ABC123";
+        // contact1.name = "Contact 1";
+        // contact1.province = "Paraná";
+        // contact1.city = "Foz do Iguaçu";
+        // contact1.active = true;
+        // contact1.contactType = ContactType.PERSONAL;
+
+        // contact1 = await getConnection(process.env.ENVIRONMENT).getRepository(Contact).save(contact1);
+
+        // const telephone1 = new Telephone();
+        // telephone1.numberType = NumberType.MOBILE;
+        // telephone1.number = "(45) 99999-9999";
+        // telephone1.contact = contact1;
+
+        // getConnection(process.env.ENVIRONMENT).getRepository(Telephone).save(telephone1);
     }
 }
 
