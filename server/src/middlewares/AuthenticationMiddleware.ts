@@ -21,6 +21,10 @@ const authenticated = (req: Request, res: Response, next) => {
 
                 res.locals.authenticatedUser = user;
 
+                //Refreshes token
+                const token = jwt.sign({username: decoded.username}, process.env.JWT_PASSWORD, {expiresIn: process.env.JWT_EXPIRATION_TIME});
+                res.cookie('jwtoken', token, {httpOnly: true});
+
                 next();
             }
         });

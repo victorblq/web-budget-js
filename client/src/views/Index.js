@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import { Route, Router, Redirect } from 'react-router';
 import { createBrowserHistory } from 'history';
 import Axios from 'axios';
+import { CssBaseline, Box } from '@material-ui/core';
 
 import { LoginForm } from './login/LoginForm';
 import { HomePage } from './home/HomePage';
+import './Index.css';
 
 function Index() {
     return (
-        <div className="Index">
+        <Box height="100%">
             <Router history={createBrowserHistory()}>
-                <div>
-                    <Route path="/login" component={LoginForm} />
-                    <Route path="/" exact={true} component={authenticated()} />
-                </div>
+                <CssBaseline />
+
+                <Route path="/login" component={LoginForm} />
+                <Route path="/" exact={true} component={authenticated()} />
             </Router>
-        </div>
+        </Box>
     );
 }
 
@@ -33,19 +35,19 @@ function authenticated() {
 
         componentDidMount() {
             Axios.get('/check-token')
-            .then((response) => {
-                if (response.status === 200) {
-                    this.setState({ loading: false });
-                } else {
-                    const error = new Error(response.error);
-                    throw error;
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                console.log(error.response);
-                this.setState({ loading: false, redirect: true });
-            });
+                .then((response) => {
+                    if (response.status === 200) {
+                        this.setState({ loading: false });
+                    } else {
+                        const error = new Error(response.error);
+                        throw error;
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                    console.log(error.response);
+                    this.setState({ loading: false, redirect: true });
+                });
         }
 
         render() {

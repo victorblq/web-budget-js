@@ -32,7 +32,7 @@ export class AuthenticationController implements Controller {
                 if(!same){
                     res.status(401).send("Unauthorized: Incorrect username or password");
                 }else{
-                    const token = jwt.sign({username: username}, process.env.JWT_PASSWORD, {expiresIn: '4 hours'});
+                    const token = jwt.sign({username: username}, process.env.JWT_PASSWORD, {expiresIn: process.env.JWT_EXPIRATION_TIME});
 
                     res.cookie('jwtoken', token, {httpOnly: true}).sendStatus(200);
                 }
