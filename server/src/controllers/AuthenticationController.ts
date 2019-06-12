@@ -1,6 +1,6 @@
 import { Controller } from "./Controller";
 import { Router, Request, Response } from "express";
-import { getConnection } from "typeorm";
+import { getRepository } from "typeorm";
 import { User } from "../entity/configuration/User";
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -21,7 +21,7 @@ export class AuthenticationController implements Controller {
     private async authenticate(req: Request, res: Response){
         const { username, password } = req.body;
 
-        const user = await getConnection(process.env.ENVIRONMENT).getRepository(User)
+        const user = await getRepository(User)
                                 .findOne({where: { 'username': username }, select: ['id', 'username', 'password']});
 
         if(!user){

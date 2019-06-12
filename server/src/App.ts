@@ -3,7 +3,7 @@ import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import 'dotenv/config';
 
-import { createConnection, getConnection } from 'typeorm';
+import { createConnection, getRepository } from 'typeorm';
 
 import { Controller } from './controllers/Controller';
 import { AuthenticationController } from './controllers/AuthenticationController';
@@ -11,10 +11,6 @@ import { User } from './entity/configuration/User';
 import { StoreType } from './entity/configuration/StoreType';
 import { Profile } from './entity/configuration/Profile';
 import { Group } from './entity/configuration/Group';
-import { Contact } from './entity/registration/Contact';
-import { ContactType } from './entity/registration/ContactType';
-import { Telephone } from './entity/registration/Telephone';
-import { NumberType } from './entity/registration/NumberType';
 
 export class App {
     public app: express.Application;
@@ -41,9 +37,8 @@ export class App {
     }
 
     listen(){
-        const environment = process.env.ENVIRONMENT;
-        createConnection(environment).then((connection) => {
-            if(environment === 'development'){
+        createConnection().then((connection) => {
+            if(process.env.ENVIRONMENT === 'development'){
                 connection.synchronize(true).then(() => {
                     this.seedDatabase();
                 });
@@ -65,13 +60,13 @@ export class App {
         user1.username = "victorblq";
         user1.storeType = StoreType.LOCAL;
         user1.active = true;
-        user1.profile = await getConnection(process.env.ENVIRONMENT).getRepository(Profile).save(new Profile());
+        user1.profile = await getRepository(Profile).save(new Profile());
         const group1 = new Group();
         group1.name = "Group1";
         group1.active = true; 
-        user1.group = await getConnection(process.env.ENVIRONMENT).getRepository(Group).save(group1);
+        user1.group = await getRepository(Group).save(group1);
 
-        getConnection(process.env.ENVIRONMENT).getRepository(User).save(user1);
+        getRepository(User).save(user1);
 
         // let contact1 = new Contact();
         // contact1.code = "ABC123";

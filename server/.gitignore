@@ -2,6 +2,9 @@
 node_modules
 yarn.lock
 
+# build files
+dist
+
 #environment variables
 .env
 
