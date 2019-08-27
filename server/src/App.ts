@@ -63,10 +63,25 @@ export class App {
         user1.profile = await getRepository(Profile).save(new Profile());
         const group1 = new Group();
         group1.name = "Group1";
-        group1.active = true; 
+        group1.active = true;
         user1.group = await getRepository(Group).save(group1);
 
         getRepository(User).save(user1);
+
+        const user2 = new User();
+        user2.name = "Victor Carvalho";
+        user2.email = "victor.blq@gmail.com";
+        user2.password = "123";
+        user2.username = "vagabundo";
+        user2.storeType = StoreType.LOCAL;
+        user2.active = true;
+        user2.profile = await getRepository(Profile).save(new Profile());
+        const group2 = new Group();
+        group2.name = "Group2";
+        group2.active = true;
+        user2.group = await getRepository(Group).save(group1);
+
+        getRepository(User).save(user2);
 
         // let contact1 = new Contact();
         // contact1.code = "ABC123";

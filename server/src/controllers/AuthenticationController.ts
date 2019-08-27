@@ -22,7 +22,8 @@ export class AuthenticationController implements Controller {
         const { username, password } = req.body;
 
         const user = await getRepository(User)
-                                .findOne({where: { 'username': username }, select: ['id', 'username', 'password']});
+                                .findOne({where: { 'username': username },
+                                                    select: ['id', 'username', 'password']});
 
         if(!user){
             return res.status(401).send("Unauthorized: User not found");
@@ -32,9 +33,13 @@ export class AuthenticationController implements Controller {
                 if(!same){
                     res.status(401).send("Unauthorized: Incorrect username or password");
                 }else{
-                    const token = jwt.sign({username: username}, process.env.JWT_PASSWORD, {expiresIn: process.env.JWT_EXPIRATION_TIME});
+                    const token = jwt.sign(
+                        {id: user.id, username: username},
+                        process.env.JWT_PASSWORD,
+                        {expiresIn: process.env.JWT_EXPIRATION_TIME});
 
-                    res.cookie('jwtoken', token, {httpOnly: true}).sendStatus(200);
+                    delete user.password;
+                    res.cookie('jwtoken', token, {httpOnly: false}).send(user);
                 }
             });
         }
@@ -42,9 +47,9 @@ export class AuthenticationController implements Controller {
 
     private logout = (req: Request, res: Response) => {
         res.clearCookie('jwtoken').sendStatus(200);
-    }
+    };
 
     private checkToken = (req: Request, res: Response) => {
         res.sendStatus(200);
-    }
+    };
 }
