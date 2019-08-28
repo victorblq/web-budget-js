@@ -1,14 +1,26 @@
 import React from 'react';
 import './App.css';
-import {Login} from "./views/login/LoginForm";
+import LoginForm from "./views/login/LoginForm";
 import {Cookies, withCookies} from "react-cookie";
 import {instanceOf} from 'prop-types';
 import Axios, {AxiosResponse} from "axios";
 import {Home} from "./views/home/Home";
+import {ThemeProvider} from '@material-ui/styles';
+import {createMuiTheme} from "@material-ui/core";
+import {blue, grey, red} from "@material-ui/core/colors";
+import {SnackbarProvider, withSnackbar} from "notistack";
 
 export const AuthenticatedUserContext = React.createContext<any | null>(null);
 
 export class App extends React.Component<any, {isAuthenticated: boolean, authenticatedUser: any}> {
+    private theme = createMuiTheme({
+        palette: {
+            primary: blue,
+            secondary: red,
+            grey: grey
+        }
+    });
+
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired
     };
@@ -20,9 +32,6 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
             isAuthenticated: false,
             authenticatedUser: null
         };
-
-        this.authenticate = this.authenticate.bind(this);
-        this.logout = this.logout.bind(this);
     }
 
     componentDidMount(): void {
@@ -32,7 +41,7 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
         });
     }
 
-    authenticate(event: React.FormEvent<HTMLFormElement>){
+    authenticate = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const authenticationData = new FormData(event.currentTarget);
@@ -40,6 +49,19 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
 
         for (const [name, value] of authenticationData.entries()) {
             jsonAuthenticationData[name] = value;
+        }
+
+        if(jsonAuthenticationData.username === "" || jsonAuthenticationData.password === ""){
+            this.props.enqueueSnackbar("Você deve preencher o usuario e a senha", {
+                variant: "error",
+                persist: false,
+                anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }
+            });
+
+            return;
         }
 
         Axios.post('/authenticate', jsonAuthenticationData)
@@ -54,7 +76,7 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
             .catch((err) => console.error(err));
     };
 
-    logout(event: React.MouseEvent){
+    logout = (event: React.MouseEvent) => {
         Axios.get('/logout')
             .then(() => {
                 this.setState({
@@ -68,15 +90,17 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
     render(){
         return (
             <React.Fragment>
-                {this.state.isAuthenticated ?
-                    <AuthenticatedUserContext.Provider value={this.state}>
-                        <Home logoutFunction={this.logout}/>
-                    </AuthenticatedUserContext.Provider>:
-                    <Login  authenticationFunction={this.authenticate}/>
-                }
+                <ThemeProvider theme={this.theme}>
+                        {this.state.isAuthenticated ?
+                            <AuthenticatedUserContext.Provider value={this.state}>
+                                <Home logoutFunction={this.logout}/>
+                            </AuthenticatedUserContext.Provider>:
+                            <LoginForm authenticationFunction={this.authenticate} />
+                        }
+                </ThemeProvider>
             </React.Fragment>
         );
     };
 };
 
-export default withCookies(App);
+export default withCookies(withSnackbar(App));
