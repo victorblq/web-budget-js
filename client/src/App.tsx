@@ -8,7 +8,7 @@ import {Home} from "./views/home/Home";
 import {ThemeProvider} from '@material-ui/styles';
 import {createMuiTheme} from "@material-ui/core";
 import {blue, grey, red} from "@material-ui/core/colors";
-import {SnackbarProvider, withSnackbar} from "notistack";
+import {withSnackbar} from "notistack";
 
 export const AuthenticatedUserContext = React.createContext<any | null>(null);
 

@@ -2,6 +2,8 @@ import {Route} from "react-router";
 import React from "react";
 import {BrowserRouter, Link} from "react-router-dom";
 import {AuthenticatedUserContext} from "../../App";
+import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 
 interface CustomHomeProps{
     logoutFunction: any
@@ -30,6 +32,18 @@ export class Home extends React.Component<CustomHomeProps>{
                 {(context: any) => {
                     return (
                         <BrowserRouter>
+                            <AppBar position="static">
+                                <Toolbar>
+                                    <IconButton edge="start" color="inherit" aria-label="menu">
+                                        <MenuIcon />
+                                    </IconButton>
+
+                                    <Typography variant="h6">
+                                        WebBudget
+                                    </Typography>
+                                </Toolbar>
+                            </AppBar>
+
                             <h1>Olá {context.authenticatedUser.username}</h1>
                             <div>
                                 <button onClick={this.props.logoutFunction} type="button">Logout</button>
