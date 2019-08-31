@@ -1,4 +1,5 @@
 import {
+    Button,
     Card,
     Collapse,
     Divider,
@@ -67,6 +68,24 @@ const useStyles = makeStyles(theme => {
             },
             leftDrawerNestedMenuItem: {
                 paddingLeft: 30,
+            },
+
+            //Bottom Card
+            leftDrawerBottomGridContainer: {
+                left: 0,
+                bottom: 0,
+                height: 50,
+                width: 250,
+                borderRadius: 0,
+                boxShadow: "none",
+                position: "absolute",
+                backgroundColor: theme.palette.grey["100"],
+            },
+            leftDrawerLogoutButtonGridItem:{
+                width: "100%"
+            },
+            logoutButton:{
+                width: "100%"
             }
         }
     );
@@ -75,7 +94,8 @@ const useStyles = makeStyles(theme => {
 interface CustomSidenavProps{
     drawersOpen: any,
     toggleDrawer: any,
-    authenticatedUser: any
+    authenticatedUser: any,
+    logoutFunction: any
 }
 
 export function Sidenav(props: Readonly<CustomSidenavProps>){
@@ -332,6 +352,21 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                             </List>
                         </Collapse>
                     </List>
+                </Grid>
+                <Grid item>
+                    <Card >
+                        <Grid container
+                              direction="column"
+                              justify="center"
+                              alignItems="center"
+                              className={styles.leftDrawerBottomGridContainer}>
+                            <Grid item className={styles.leftDrawerLogoutButtonGridItem}>
+                                <Button className={styles.logoutButton} onClick={props.logoutFunction}>
+                                    Logout
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Card>
                 </Grid>
             </Grid>
         </Drawer>

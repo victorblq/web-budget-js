@@ -37,7 +37,7 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
     componentDidMount(): void {
         this.setState({
             isAuthenticated: this.props.cookies.cookies.jwtoken != null,
-            authenticatedUser: JSON.parse(sessionStorage.getItem("authenticatedUser") || "{}")
+            authenticatedUser: JSON.parse(localStorage.getItem("authenticatedUser") || "{}")
         });
     }
 
@@ -71,7 +71,7 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
                     isAuthenticated: true
                 });
 
-                sessionStorage.setItem("authenticatedUser", JSON.stringify(response.data));
+                localStorage.setItem("authenticatedUser", JSON.stringify(response.data));
             })
             .catch((err: AxiosError) => {
                 this.props.enqueueSnackbar(err.response.data, {

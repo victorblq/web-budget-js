@@ -24,6 +24,7 @@ export function Home(props: Readonly<CustomHomeProps>) {
                     <React.Fragment>
                         <Sidenav drawersOpen={drawersOpen}
                                  toggleDrawer={toggleDrawer}
+                                 logoutFunction={props.logoutFunction}
                                  authenticatedUser={context.authenticatedUser}/>
 
                         <AppBar position="static">
