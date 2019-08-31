@@ -22,9 +22,12 @@ export class AuthenticationController implements Controller {
         const { username, password } = req.body;
 
         const user = await getRepository(User)
-                                .findOne({where: { 'username': username },
-                                                    select: ['id', 'username', 'password']});
+            .createQueryBuilder("user")
+            .leftJoinAndSelect("user.group", "group")
+            .where({username: username})
+            .getOne();
 
+        console.log(user);
         if(!user){
             return res.status(401).send("Unauthorized: User not found");
         }else{

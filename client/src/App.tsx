@@ -3,7 +3,7 @@ import './App.css';
 import LoginForm from "./views/login/LoginForm";
 import {Cookies, withCookies} from "react-cookie";
 import {instanceOf} from 'prop-types';
-import Axios, {AxiosResponse} from "axios";
+import Axios, {AxiosError, AxiosResponse} from "axios";
 import {Home} from "./views/home/Home";
 import {ThemeProvider} from '@material-ui/styles';
 import {createMuiTheme} from "@material-ui/core";
@@ -73,7 +73,17 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
 
                 sessionStorage.setItem("authenticatedUser", JSON.stringify(response.data));
             })
-            .catch((err) => console.error(err));
+            .catch((err: AxiosError) => {
+                this.props.enqueueSnackbar(err.response.data, {
+                    variant: "error",
+                    persist: false,
+                    anchorOrigin: {
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }
+                });
+                console.error(err);
+            });
     };
 
     logout = (event: React.MouseEvent) => {

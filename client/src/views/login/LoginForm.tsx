@@ -35,18 +35,18 @@ const useStyles = makeStyles(theme => {
 });
 
 export default function LoginForm(props: Readonly<CustomLoginProps>){
-    const classes = useStyles();
+    const styles = useStyles(props);
 
     return (
             <Container maxWidth="xs">
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
+                <Paper className={styles.paper}>
+                    <Avatar className={styles.avatar}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         WebBudget <Typography component="small">TS</Typography>
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={props.authenticationFunction}>
+                    <form className={styles.form} noValidate onSubmit={props.authenticationFunction}>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -73,7 +73,7 @@ export default function LoginForm(props: Readonly<CustomLoginProps>){
                             fullWidth
                             variant="contained"
                             color="primary"
-                            className={classes.submit}>
+                            className={styles.submit}>
                             Sign In
                         </Button>
                     </form>

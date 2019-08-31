@@ -30,7 +30,8 @@ export class User extends PersistentEntity {
     @OneToOne(type => Profile, {nullable: false, cascade: true})
     @JoinColumn({name: "id_profile"})
     profile: Profile;
-    @ManyToOne(type => Group, {nullable: false})
+
+    @ManyToOne(type => Group, {nullable: false, eager: true})
     @JoinColumn({name: "id_group"})
     group: Group;
 
