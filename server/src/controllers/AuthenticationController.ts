@@ -27,7 +27,6 @@ export class AuthenticationController implements Controller {
             .where({username: username})
             .getOne();
 
-        console.log(user);
         if(!user){
             return res.status(401).send("Unauthorized: User not found");
         }else{

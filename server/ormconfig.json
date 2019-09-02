@@ -5,7 +5,7 @@
         "port": 5432,
         "username": "webbudget",
         "password": "webbudget",
-        "database": "webbudgetjs",
+        "database": "webbudgetts",
         "entities": ["src/entity/**/*.ts"],
         "logging": true,
         "migrationsTableName": "migrations",

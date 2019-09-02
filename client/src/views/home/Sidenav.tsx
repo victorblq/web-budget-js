@@ -8,7 +8,8 @@ import {
     List,
     ListItem,
     ListItemIcon,
-    ListItemText, makeStyles,
+    ListItemText,
+    makeStyles,
     Typography
 } from "@material-ui/core";
 import Gravatar from "react-gravatar";
@@ -16,17 +17,19 @@ import {
     AccountBalanceWallet,
     Class,
     Contacts,
-    CreditCard,
+    CreditCard, Dashboard,
     DateRange,
     DirectionsCar,
     EventAvailable,
     ExpandLess,
     ExpandMore,
-    GpsFixed, Group,
+    GpsFixed,
+    Group,
     LocalAtm,
     LocalGasStation,
     LocalOffer,
-    MonetizationOn, PersonAdd,
+    MonetizationOn,
+    PersonAdd,
     Settings,
     SwapHoriz,
     Today,
@@ -34,6 +37,7 @@ import {
     ViewList
 } from "@material-ui/icons";
 import React, {useState} from "react";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => {
     return (
@@ -61,7 +65,10 @@ const useStyles = makeStyles(theme => {
 
             //Menu Itens
             leftDrawerMenu: {
-                width: 250
+                width: 250,
+                overflowY: "auto",
+                overflowX: "hidden",
+                height: "calc(100% - 50px)"
             },
             leftDrawerNestedMenu:{
                 backgroundColor: theme.palette.grey["100"]
@@ -122,6 +129,10 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
         }
     };
 
+    const toggleDrawer = (drawer: string, open: boolean) => {
+        props.toggleDrawer(drawer, open)
+    };
+
     return (
         <Drawer open={props.drawersOpen.leftDrawer}
                 onClose={() => props.toggleDrawer('leftDrawer', false)}>
@@ -129,7 +140,8 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                 container
                 direction="column"
                 justify="flex-start"
-                alignItems="center">
+                alignItems="center"
+                className={styles.leftDrawerMenu}>
                 <Grid item>
                     <Card className={styles.leftDrawerUserCard}>
                         <Grid container
@@ -156,7 +168,20 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                         </Grid>
                     </Card>
 
-                    <List className={styles.leftDrawerMenu}>
+                    <List>
+                        {/*Dashboard*/}
+                        <ListItem button
+                                  to={"/"}
+                                  component={Link}
+                                  key={"dashboard"}
+                                  onClick={() => toggleDrawer("leftDrawer", false)}>
+                            <ListItemIcon>
+                                <Dashboard />
+                            </ListItemIcon>
+
+                            <ListItemText primary="Dashboard" />
+                        </ListItem>
+
                         {/*Registration*/}
                         <ListItem button
                                   key={"registration"}
@@ -172,12 +197,17 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                                   in={menuOpen === "registration"}
                                   className={styles.leftDrawerNestedMenu}>
                             <List component="div" disablePadding>
-                                <ListItem button className={styles.leftDrawerNestedMenuItem}>
+                                <ListItem button
+                                          component={Link}
+                                          to={"/registration/card"}
+                                          className={styles.leftDrawerNestedMenuItem}
+                                          onClick={() => toggleDrawer("leftDrawer", false)}>
                                     <ListItemIcon>
                                         <CreditCard />
                                     </ListItemIcon>
                                     <ListItemText primary="Credit Card" />
                                 </ListItem>
+
                                 <ListItem button className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
                                         <DirectionsCar />
@@ -191,24 +221,28 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                                     </ListItemIcon>
                                     <ListItemText primary="Contacts" />
                                 </ListItem>
+
                                 <ListItem button className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
                                         <AccountBalanceWallet />
                                     </ListItemIcon>
                                     <ListItemText primary="Wallet" />
                                 </ListItem>
+
                                 <ListItem button className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
                                         <LocalOffer />
                                     </ListItemIcon>
                                     <ListItemText primary="Center of cost" />
                                 </ListItem>
+
                                 <ListItem button className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
                                         <DateRange />
                                     </ListItemIcon>
                                     <ListItemText primary="Financial period" />
                                 </ListItem>
+
                                 <ListItem button className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
                                         <Class />
@@ -296,6 +330,7 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                                     </ListItemIcon>
                                     <ListItemText primary="Closings" />
                                 </ListItem>
+
                                 <ListItem button
                                           className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
@@ -303,6 +338,7 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                                     </ListItemIcon>
                                     <ListItemText primary="Transfers" />
                                 </ListItem>
+
                                 <ListItem button
                                           className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
@@ -335,6 +371,7 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                                     </ListItemIcon>
                                     <ListItemText primary="Groups" />
                                 </ListItem>
+
                                 <ListItem button
                                           className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>
@@ -342,6 +379,7 @@ export function Sidenav(props: Readonly<CustomSidenavProps>){
                                     </ListItemIcon>
                                     <ListItemText primary="Users" />
                                 </ListItem>
+
                                 <ListItem button
                                           className={styles.leftDrawerNestedMenuItem}>
                                     <ListItemIcon>

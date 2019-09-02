@@ -21,7 +21,7 @@ export class Card extends PersistentEntity{
     number: string;
     @Column({name: "flag", nullable: false, length: 45})
     flag: string;
-    @Column({name: "credit_limit", nullable: true, type: "decimal", precision: 2})
+    @Column({name: "credit_limit", nullable: true, type: "decimal"})
     creditLimit: number;
     @Column({name: "expiration_day", nullable: true})
     expirationDay: number;
@@ -31,7 +31,7 @@ export class Card extends PersistentEntity{
     active: boolean;
     @Column({name: "card_type", nullable: false, enum: CardType, type: "text"})
     cardType: CardType;
-    @ManyToOne(type => Wallet)
+    @ManyToOne(type => Wallet, {nullable: true})
     @JoinColumn({name: "id_wallet"})
     wallet: Wallet;
 }

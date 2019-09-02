@@ -1,9 +1,11 @@
 import React, {useState} from "react";
-import {BrowserRouter, Link} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {AuthenticatedUserContext} from "../../App";
 import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import {Sidenav} from "./Sidenav";
+import {CreditCardList} from "./registration/list/CreditCardList";
+import {Dashboard} from "./Dashboard";
 
 interface CustomHomeProps{
     logoutFunction: any
@@ -22,34 +24,33 @@ export function Home(props: Readonly<CustomHomeProps>) {
             {(context: any) => {
                 return (
                     <React.Fragment>
-                        <Sidenav drawersOpen={drawersOpen}
-                                 toggleDrawer={toggleDrawer}
-                                 logoutFunction={props.logoutFunction}
-                                 authenticatedUser={context.authenticatedUser}/>
-
-                        <AppBar position="static">
-                            <Toolbar>
-                                <IconButton edge="start"
-                                            color="inherit"
-                                            aria-label="menu"
-                                            onClick={() => toggleDrawer('leftDrawer', true)}>
-                                    <MenuIcon />
-                                </IconButton>
-
-                                <Typography variant="h6">
-                                    WebBudget
-                                </Typography>
-                            </Toolbar>
-                        </AppBar>
-
                         <BrowserRouter>
-                            <h1>Olá {context.authenticatedUser.username}</h1>
-                            <div>
-                                <button onClick={props.logoutFunction} type="button">Logout</button>
-                                <Link to={'/usuario'}>Go to usuario</Link>
-                            </div>
-                            {/*<Route path="/" exact component={Dashboard}/>*/}
-                            {/*<Route path="/usuario" component={Usuario}/>*/}
+                            <React.Fragment>
+                                <Sidenav drawersOpen={drawersOpen}
+                                         toggleDrawer={toggleDrawer}
+                                         logoutFunction={props.logoutFunction}
+                                         authenticatedUser={context.authenticatedUser}/>
+
+                                <AppBar position="static">
+                                    <Toolbar>
+                                        <IconButton edge="start"
+                                                    color="inherit"
+                                                    aria-label="menu"
+                                                    onClick={() => toggleDrawer('leftDrawer', true)}>
+                                            <MenuIcon />
+                                        </IconButton>
+
+                                        <Typography variant="h6">
+                                            WebBudget
+                                        </Typography>
+                                    </Toolbar>
+                                </AppBar>
+
+                                <Switch>
+                                    <Route path="/" exact component={Dashboard} />
+                                    <Route path="/registration/card" component={CreditCardList} />
+                                </Switch>
+                            </React.Fragment>
                         </BrowserRouter>
                     </React.Fragment>);
                 }

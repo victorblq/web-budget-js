@@ -6,18 +6,18 @@ import {instanceOf} from 'prop-types';
 import Axios, {AxiosError, AxiosResponse} from "axios";
 import {Home} from "./views/home/Home";
 import {ThemeProvider} from '@material-ui/styles';
-import {createMuiTheme} from "@material-ui/core";
-import {blue, grey, red} from "@material-ui/core/colors";
 import {withSnackbar} from "notistack";
+import {blue, green, red} from "@material-ui/core/colors";
+import {createTheme} from "./theme/Theme";
 
 export const AuthenticatedUserContext = React.createContext<any | null>(null);
 
 export class App extends React.Component<any, {isAuthenticated: boolean, authenticatedUser: any}> {
-    private theme = createMuiTheme({
+    private theme = createTheme({
         palette: {
             primary: blue,
-            secondary: red,
-            grey: grey
+            secondary: green,
+            error: red
         }
     });
 
@@ -29,16 +29,9 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
         super(props);
 
         this.state = {
-            isAuthenticated: false,
-            authenticatedUser: null
-        };
-    }
-
-    componentDidMount(): void {
-        this.setState({
-            isAuthenticated: this.props.cookies.cookies.jwtoken != null,
+            isAuthenticated: localStorage.getItem("authenticatedUser") != null,
             authenticatedUser: JSON.parse(localStorage.getItem("authenticatedUser") || "{}")
-        });
+        };
     }
 
     authenticate = (event: React.FormEvent<HTMLFormElement>) => {
@@ -89,6 +82,8 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
     logout = (event: React.MouseEvent) => {
         Axios.get('/logout')
             .then(() => {
+                localStorage.removeItem("authenticatedUser");
+
                 this.setState({
                     ...this.state,
                     isAuthenticated: false

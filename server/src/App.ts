@@ -3,14 +3,17 @@ import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
 import 'dotenv/config';
 
-import { createConnection, getRepository } from 'typeorm';
+import {createConnection, getRepository} from 'typeorm';
 
-import { Controller } from './controllers/Controller';
-import { AuthenticationController } from './controllers/AuthenticationController';
-import { User } from './entity/configuration/User';
-import { StoreType } from './entity/configuration/StoreType';
-import { Profile } from './entity/configuration/Profile';
-import { Group } from './entity/configuration/Group';
+import {Controller} from './controllers/Controller';
+import {AuthenticationController} from './controllers/AuthenticationController';
+import {User} from './entity/configuration/User';
+import {StoreType} from './entity/configuration/StoreType';
+import {Profile} from './entity/configuration/Profile';
+import {Group} from './entity/configuration/Group';
+import {CardController} from "./controllers/registration/CardController";
+import {Card} from "./entity/registration/Card";
+import {CardType} from "./entity/registration/CardType";
 
 export class App {
     public app: express.Application;
@@ -83,6 +86,18 @@ export class App {
 
         getRepository(User).save(user2);
 
+        const card = new Card();
+        card.name = "nuBank";
+        card.number = "5234218471817812";
+        card.active = true;
+        card.cardType = CardType.CREDIT;
+        card.owner = "VICTOR BLOSQUIEVIS";
+        card.creditLimit = 4100;
+        card.flag = "MasterCard";
+
+        getRepository(Card).save(card);
+
+
         // let contact1 = new Contact();
         // contact1.code = "ABC123";
         // contact1.name = "Contact 1";
@@ -103,7 +118,8 @@ export class App {
 }
 
 const app = new App([
-    new AuthenticationController()
+    new AuthenticationController(),
+    new CardController()
 ], process.env.PORT);
 
 app.listen();
