@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Axios, {AxiosResponse} from "axios";
-import {Grid, makeStyles, Paper, Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
+import {Button, Grid, makeStyles, Paper, Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
 import {Cancel, CheckCircle} from "@material-ui/icons";
+import {Header} from "../../components/Header";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles(theme => {
     return (
         {
-            container: {
-                padding: "15px"
-            },
             activeIcon: {
                 color: theme.customPalette.success["500"]
             }
@@ -34,7 +33,15 @@ export function CreditCardList(props: Readonly<CustomCreditCardListProps>) {
     }, []);
 
     return (
-        <div className={styles.container}>
+        <>
+            <Header title="Credit Cards" subtitle="Cards management">
+                <div>
+                    <Button variant="contained" color="primary" component={Link} to="card/add">
+                        Add
+                    </Button>
+                </div>
+            </Header>
+
             <Paper>
                 <Table>
                     <TableHead>
@@ -64,12 +71,19 @@ export function CreditCardList(props: Readonly<CustomCreditCardListProps>) {
                                 </TableCell>
                                 <TableCell align="left">{creditCard.owner}</TableCell>
                                 <TableCell align="left">{creditCard.cardType}</TableCell>
-                                <TableCell align="left"></TableCell>
+                                <TableCell align="left">
+                                    <Button variant="contained"
+                                            color="primary"
+                                            component={Link}
+                                            to={`card/edit/${creditCard.id}`}>
+                                        Edit
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </Paper>
-        </div>
+        </>
     );
 }

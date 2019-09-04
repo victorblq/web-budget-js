@@ -14,7 +14,7 @@ export class AuthenticationController implements Controller {
 
     constructor(){
         this.router.post('/authenticate', this.authenticate);
-        this.router.get('/logout', authenticated, this.logout);
+        this.router.get('/logout', this.logout);
         this.router.get('/check-token', authenticated, this.checkToken);
     }
 

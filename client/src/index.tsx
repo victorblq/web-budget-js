@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {SnackbarProvider} from "notistack";
+import 'typeface-roboto';
 
 ReactDOM.render(<SnackbarProvider maxSnack={1}><App /></SnackbarProvider>, document.getElementById('root'));
 

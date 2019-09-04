@@ -28,9 +28,9 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
     constructor(props:any){
         super(props);
 
-        this.state = {
-            isAuthenticated: localStorage.getItem("authenticatedUser") != null,
-            authenticatedUser: JSON.parse(localStorage.getItem("authenticatedUser") || "{}")
+        this.state ={
+            isAuthenticated: false,
+            authenticatedUser: {}
         };
     }
 
@@ -83,7 +83,6 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
         Axios.get('/logout')
             .then(() => {
                 localStorage.removeItem("authenticatedUser");
-
                 this.setState({
                     ...this.state,
                     isAuthenticated: false
@@ -92,18 +91,33 @@ export class App extends React.Component<any, {isAuthenticated: boolean, authent
             .catch((err) => console.error(err));
     };
 
+    checkAuthentication = () => {
+        Axios.get("/check-token")
+            .then(() => {
+                this.setState({
+                    isAuthenticated: true,
+                    authenticatedUser: JSON.parse(localStorage.getItem("authenticatedUser") || "{}")
+                });
+            })
+            .catch((err) => console.error(err));
+    };
+
+    componentDidMount(): void {
+        this.checkAuthentication();
+    }
+
     render(){
         return (
-            <React.Fragment>
+            <>
                 <ThemeProvider theme={this.theme}>
-                        {this.state.isAuthenticated ?
+                        {this.state != null && this.state.isAuthenticated ?
                             <AuthenticatedUserContext.Provider value={this.state}>
                                 <Home logoutFunction={this.logout}/>
                             </AuthenticatedUserContext.Provider>:
                             <LoginForm authenticationFunction={this.authenticate} />
                         }
                 </ThemeProvider>
-            </React.Fragment>
+            </>
         );
     };
 };

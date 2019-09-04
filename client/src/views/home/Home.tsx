@@ -1,17 +1,32 @@
 import React, {useState} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {AuthenticatedUserContext} from "../../App";
-import {AppBar, IconButton, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, IconButton, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import {Sidenav} from "./Sidenav";
 import {CreditCardList} from "./registration/list/CreditCardList";
 import {Dashboard} from "./Dashboard";
+import {CreditCardForm} from "./registration/form/CreditCardForm";
+
+const useStyles = makeStyles(theme => {
+    return ({
+        '@global': {
+            body: {
+                backgroundColor: theme.palette.grey["200"],
+            }
+        },
+        container: {
+            padding: "15px"
+        }
+    });
+});
 
 interface CustomHomeProps{
     logoutFunction: any
 }
 
 export function Home(props: Readonly<CustomHomeProps>) {
+    const styles = useStyles(props);
 
     const [drawersOpen, setDrawersOpen] = useState({leftDrawer: false});
 
@@ -23,7 +38,7 @@ export function Home(props: Readonly<CustomHomeProps>) {
         <AuthenticatedUserContext.Consumer>
             {(context: any) => {
                 return (
-                    <React.Fragment>
+                    <>
                         <BrowserRouter>
                             <React.Fragment>
                                 <Sidenav drawersOpen={drawersOpen}
@@ -46,13 +61,17 @@ export function Home(props: Readonly<CustomHomeProps>) {
                                     </Toolbar>
                                 </AppBar>
 
-                                <Switch>
-                                    <Route path="/" exact component={Dashboard} />
-                                    <Route path="/registration/card" component={CreditCardList} />
-                                </Switch>
+                                <div className={styles.container}>
+                                    <Switch>
+                                        <Route path="/" exact component={Dashboard} />
+                                        <Route path="/registration/card" exact component={CreditCardList} />
+                                            <Route path="/registration/card/add" exact component={CreditCardForm} />
+                                            <Route path="/registration/card/edit/:id" exact component={CreditCardForm} />
+                                    </Switch>
+                                </div>
                             </React.Fragment>
                         </BrowserRouter>
-                    </React.Fragment>);
+                    </>);
                 }
             }
         </AuthenticatedUserContext.Consumer>
